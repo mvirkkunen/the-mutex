@@ -31,6 +31,7 @@ mod impl_cs {
 
     type CriticalSectionFunc = fn(ctx: *mut (), f: fn(ctx: *mut ()) -> ());
 
+    // This could be done with a weak symbol but unfortunately Rust doesn't do those yet.
     static THE_CRITICAL_SECTION: AtomicPtr<CriticalSectionFunc> = AtomicPtr::new(ptr::null_mut());
 
     pub struct Mutex<T>(T);
