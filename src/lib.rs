@@ -2,11 +2,13 @@
 
 #[cfg(impl_std)]
 mod impl_std {
-    pub struct Mutex<T>(std::sync::Mutex<T>);
+    use std::sync;
+
+    pub struct Mutex<T>(sync::Mutex<T>);
 
     impl<T> Mutex<T> {
         pub fn new(t: T) -> Mutex<T> {
-            Mutex(t)
+            Mutex(sync::Mutex::new(t))
         }
     }
 
@@ -90,9 +92,9 @@ mod impl_cs {
         riscv::interrupt::free(|_| f(ctx))
     }
 
-    #[cfg(not(any(impl_cortex_m, impl_riscv)))]
+    #[cfg(impl_none)]
     fn the_critical_section(_ctx: *mut (), _f: fn(ctx: *mut ()) -> ()) {
-        panic!("not supported");
+        panic!("use set_the_critical_section");
     }
 
     pub unsafe fn set_the_critical_section(f: *const CriticalSectionFunc) {

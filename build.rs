@@ -3,7 +3,7 @@ use std::env;
 fn main() {
     let target = env::var("TARGET").unwrap();
 
-    // Pretty rudimentary but should be made better
+    // Pretty rudimentary but can be made better
 
     let impl_type = if env::var("CARGO_CFG_UNIX").is_ok() || env::var("CARGO_CFG_WINDOWS").is_ok() {
         "std"
@@ -15,5 +15,5 @@ fn main() {
         "none"
     };
 
-    println!("cargo:rustc-cfg={}", impl_type);
+    println!("cargo:rustc-cfg=impl_{}", impl_type);
 }
