@@ -1,0 +1,14 @@
+[package]
+name = "the-mutex"
+version = "0.1.0"
+authors = ["Matti Virkkunen <mvirkkunen@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+mutex-trait = "0.1.0"
+
+[target.'cfg(all(target_arch = "arm", target_pointer_width = "32"))'.dependencies]
+cortex-m = "0.6.2"
+
+[target.'cfg(target_arch = "riscv32")'.dependencies]
+riscv = "0.5.6"
